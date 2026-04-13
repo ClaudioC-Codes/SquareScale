@@ -30,7 +30,7 @@ CREATE TABLE `notifications` (
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`notification_id`),
   UNIQUE KEY `user_id_UNIQUE` (`user_id`),
-  CONSTRAINT `user_id3` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`userId`)
+  CONSTRAINT `user_id3` FOREIGN KEY (`user_id`) REFERENCES `users` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
