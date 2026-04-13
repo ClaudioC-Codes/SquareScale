@@ -10,17 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /** Exposes REST endpoints under /admin for user management. */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
-    // Only these three roles are allowed when creating or updating a user.
-    private static final Set<String> ALLOWED_ROLES = Set.of("ADMIN", "MANAGER", "USER");
+    // Roles allowed when creating or updating a user.
+    private static final Set<String> ALLOWED_ROLES = Set.of("ADMIN", "MANAGER", "USER", "ACCOUNTANT");
 
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
@@ -49,9 +51,8 @@ public class AdminController {
             return ResponseEntity.badRequest().body("First name and last name are required");
         }
 
-        // Role must be one of ADMIN, MANAGER, USER.
         if (!isValidRole(user.getRole())) {
-            return ResponseEntity.badRequest().body("Invalid role. Allowed roles: ADMIN, MANAGER, USER");
+            return ResponseEntity.badRequest().body("Invalid role. Allowed roles: ADMIN, MANAGER, USER, ACCOUNTANT");
         }
 
         // Format: first initial + last name + MMyy (e.g. jdoe0326).
@@ -104,7 +105,9 @@ public class AdminController {
         if (req.lastName() != null) user.setLastName(req.lastName());
         if (req.email() != null) user.setEmail(req.email());
         if (req.role() != null) {
-            if (!isValidRole(req.role())) return ResponseEntity.badRequest().body("Invalid role. Allowed roles: ADMIN, MANAGER, USER");
+            if (!isValidRole(req.role())) {
+                return ResponseEntity.badRequest().body("Invalid role. Allowed roles: ADMIN, MANAGER, USER, ACCOUNTANT");
+            }
             user.setRole(req.role());
         }
         if (req.newPassword() != null && !req.newPassword().trim().isEmpty()) {
@@ -116,13 +119,15 @@ public class AdminController {
         return ResponseEntity.ok("User updated");
     }
 
-    /** POST /admin/users/{id}/activate – Set user as active so they can log in. */
+    /** POST /admin/users/{id}/activate – Restore login: active, clear time suspension and lockout counters. */
     @PostMapping("/users/{id}/activate")
     public ResponseEntity<String> activateUser(@PathVariable Long id) {
         Optional<User> u = userRepo.findById(id);
         if (u.isEmpty()) return ResponseEntity.notFound().build();
         User user = u.get();
         user.setActive(true);
+        user.setSuspendedUntil(null);
+        user.setFailedLoginAttempts(0);
         userRepo.save(user);
         return ResponseEntity.ok("User activated");
     }
@@ -164,21 +169,39 @@ public class AdminController {
         return userRepo.findByPasswordLastSetBefore(threeMonthsAgo);
     }
 
+    /**
+     * Active managers and administrators (for “email from account page” and similar).
+     * GET /admin/contact-recipients
+     */
+    @GetMapping("/contact-recipients")
+    public List<StaffContactOut> contactRecipients() {
+        return userRepo.findByRoleIdInAndActiveTrue(List.of(2, 3)).stream()
+                .sorted(Comparator.comparing(User::getRole).thenComparing(User::getUsername))
+                .map(u -> new StaffContactOut(u.getId(), u.getUsername(), u.getEmail(), u.getRole()))
+                .collect(Collectors.toList());
+    }
+
+    public record StaffContactOut(Long userId, String username, String email, String role) {}
+
     /** POST /admin/users/{id}/send-email – Send a message to the user's email (currently simulated with console output). */
     @PostMapping("/users/{id}/send-email")
-    public ResponseEntity<String> sendEmail(@PathVariable Long id, @RequestParam String message) {
+    public ResponseEntity<String> sendEmail(
+            @PathVariable Long id,
+            @RequestParam String message,
+            @RequestParam(required = false) String subject
+    ) {
         Optional<User> u = userRepo.findById(id);
         if (u.isEmpty()) return ResponseEntity.notFound().build();
         User user = u.get();
 
-        // Simulate sending email (replace with real mail service when needed).
-        System.out.println("Email sent to " + user.getEmail() + ": " + message);
+        String subj = subject != null && !subject.isBlank() ? subject.trim() : "(no subject)";
+        System.out.println("Email to " + user.getEmail() + " subject=" + subj + " body=" + message);
         return ResponseEntity.ok("Email sent to " + user.getEmail());
     }
 
     // ----- Helpers -----
 
-    /** Returns true only if role is ADMIN, MANAGER, or USER (case-insensitive). */
+    /** Returns true only if role is ADMIN, MANAGER, USER, or ACCOUNTANT (case-insensitive). */
     private boolean isValidRole(String role) {
         if (role == null) {
             return false;

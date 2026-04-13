@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!-- Financial statements: trial balance, balance sheet, income statement, retained earnings. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Financial Reports</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main accounts-main report-main">
+    <h1 class="home-title">Financial reports</h1>
+    <p class="home-desc">Generate trial balance, balance sheet, income statement, and retained earnings. Balances reflect the chart of accounts; the income statement uses posted journal activity in the date range.</p>
+
+    <section class="add-user-section report-controls no-print">
+        <div class="report-toolbar">
+            <label>Report
+                <select id="reportType" title="Choose which statement to run">
+                    <option value="trial-balance">Trial balance</option>
+                    <option value="balance-sheet">Balance sheet</option>
+                    <option value="income-statement">Income statement</option>
+                    <option value="retained-earnings">Retained earnings</option>
+                </select>
+            </label>
+            <span id="asOfWrap">
+                <label>As of
+                    <input type="date" id="asOfDate" title="Point-in-time date for this report">
+                </label>
+            </span>
+            <span id="periodWrap" class="hidden">
+                <label>From
+                    <input type="date" id="periodFrom" title="Start of period">
+                </label>
+                <label>To
+                    <input type="date" id="periodTo" title="End of period">
+                </label>
+            </span>
+            <button type="button" class="btn-submit" id="btnRunReport" title="Load the selected report">Run report</button>
+        </div>
+        <div class="report-actions no-print">
+            <button type="button" class="btn-submit" id="btnPrint" title="Print this report">Print</button>
+            <button type="button" class="btn-back" id="btnSaveJson" title="Download report as JSON">Save (JSON)</button>
+            <button type="button" class="btn-back" id="btnEmail" title="Open email draft with report summary">Email…</button>
+        </div>
+        <p id="reportMessage" class="message-text hidden"></p>
+    </section>
+
+    <section class="add-user-section report-output" id="reportOutput">
+        <p class="report-placeholder">Choose a report and click <strong>Run report</strong>.</p>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/financial-reports.js"></script>
+</body>
+</html>

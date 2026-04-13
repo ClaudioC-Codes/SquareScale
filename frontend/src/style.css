@@ -470,6 +470,10 @@ body.has-app-shell .user-badge {
     flex-direction: column;
     gap: 0.35rem;
 }
+/* Must beat .app-calendar-popover { display: flex } so .hidden actually hides the popover */
+.app-calendar-popover.hidden {
+    display: none;
+}
 .app-calendar-popover label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -512,6 +516,86 @@ button.app-nav-logout:hover {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+.app-notify-wrap {
+    position: relative;
+}
+.app-notify-btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0;
+    border: 1px solid rgba(40, 90, 140, 0.35);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    cursor: pointer;
+    font-size: 1.15rem;
+    line-height: 1;
+}
+.app-notify-btn:hover {
+    background: rgba(129, 193, 228, 0.2);
+}
+.app-notify-badge {
+    position: absolute;
+    top: -0.35rem;
+    right: -0.35rem;
+    min-width: 1.15rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 999px;
+    background: rgb(180, 50, 50);
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-align: center;
+}
+.app-notify-badge.hidden {
+    display: none;
+}
+.app-notify-panel {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px);
+    width: min(360px, 92vw);
+    max-height: 320px;
+    overflow-y: auto;
+    background: #fff;
+    border: 1px solid rgba(40, 90, 140, 0.35);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    z-index: 200;
+    padding: 0.5rem 0;
+}
+.app-notify-panel.hidden {
+    display: none;
+}
+.app-notify-item {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+.app-notify-item:last-child {
+    border-bottom: none;
+}
+.app-notify-read {
+    opacity: 0.72;
+}
+.app-notify-link {
+    color: rgb(30, 80, 130);
+    text-decoration: none;
+    display: block;
+}
+.app-notify-link:hover {
+    text-decoration: underline;
+}
+.app-notify-loading,
+.app-notify-empty {
+    margin: 0.5rem 0.85rem;
+    font-size: 0.88rem;
+    color: #555;
 }
 .btn-help {
     padding: 0.45rem 1rem;
@@ -571,6 +655,37 @@ button.app-nav-logout:hover {
     align-items: center;
 }
 .account-filters .filter-actions .btn-submit,
+.ledger-email-section {
+    margin-top: 1.25rem;
+}
+.ledger-email-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0.5rem 0.75rem;
+    margin-bottom: 0.5rem;
+    align-items: end;
+}
+.ledger-email-row label,
+.ledger-email-section > label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.ledger-email-body {
+    width: 100%;
+    max-width: 560px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    padding: 0.4rem 0.5rem;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.ledger-email-actions {
+    margin-top: 0.5rem;
+}
+
 .account-filters .filter-actions .btn-back {
     margin-top: 0;
     min-width: 11.5rem;
@@ -611,8 +726,8 @@ button.app-nav-logout:hover {
    event log before/after, journal hub.
    ================================================================ */
 
-.journal-hub-section { max-width: 680px; }
-.journal-hub-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.5rem; }
+.journal-hub-section { max-width: 960px; }
+.journal-hub-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 0.5rem; }
 @media (max-width: 560px) { .journal-hub-cards { grid-template-columns: 1fr; } }
 .journal-hub-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.25rem 1.1rem; border: 1px solid var(--ss-border); border-radius: 12px; background: #fff; text-decoration: none; color: var(--ss-text); transition: box-shadow 0.15s, border-color 0.15s; }
 .journal-hub-card:hover { border-color: var(--ss-accent-dark); box-shadow: 0 4px 16px rgba(0,80,160,0.10); }
@@ -684,3 +799,24 @@ button.app-nav-logout:hover {
 .event-before-label { color: rgb(150,60,20); }
 .event-after-label  { color: rgb(30,110,55); }
 .event-snapshot-pre { background: #f3f6fb; border: 1px solid var(--ss-border); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; font-family: ui-monospace, monospace; white-space: pre-wrap; word-break: break-word; max-height: 320px; overflow-y: auto; margin: 0; }
+
+/* Financial reports (Part 3) */
+.report-main { max-width: 980px; }
+.report-toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: flex-end; margin-bottom: 0.75rem; }
+.report-toolbar label { display: flex; flex-direction: column; gap: 0.2rem; font-weight: 600; font-size: 0.88rem; }
+.report-toolbar select, .report-toolbar input[type="date"] { font-size: 0.95rem; padding: 0.4rem 0.55rem; }
+.report-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.report-output { margin-top: 1rem; }
+.report-placeholder { color: #666; margin: 0; }
+.report-title { margin: 0 0 0.75rem; font-size: 1.25rem; color: rgb(30, 80, 130); }
+.report-asof { font-weight: 500; color: #555; font-size: 1rem; }
+.report-section-title { margin: 1.25rem 0 0.5rem; font-size: 1.05rem; color: rgb(40, 90, 140); }
+.report-table { width: 100%; margin-bottom: 0.5rem; }
+.report-subtotal, .report-net-income, .report-meta { margin: 0.5rem 0; font-size: 0.95rem; }
+.report-net-income { font-size: 1.05rem; margin-top: 0.75rem; }
+.report-re-list { margin: 0.5rem 0 1rem; padding-left: 1.25rem; line-height: 1.6; }
+@media print {
+    .no-print, .app-top-bar, .logoSpace, .user-badge { display: none !important; }
+    body.has-app-shell { padding-top: 0 !important; }
+    .report-output, .report-main { max-width: none; }
+}

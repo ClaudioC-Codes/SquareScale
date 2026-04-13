@@ -5,12 +5,15 @@ import com.squarescale.backend.entity.User;
 import com.squarescale.backend.repository.AccountRepository;
 import com.squarescale.backend.repository.UserRepository;
 import com.squarescale.backend.service.AuditLogService;
+import com.squarescale.backend.service.LedgerService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,11 +34,18 @@ public class AdminAccountController {
     private final AccountRepository accountRepo;
     private final UserRepository userRepo;
     private final AuditLogService auditLogService;
+    private final LedgerService ledgerService;
 
-    public AdminAccountController(AccountRepository accountRepo, UserRepository userRepo, AuditLogService auditLogService) {
+    public AdminAccountController(
+            AccountRepository accountRepo,
+            UserRepository userRepo,
+            AuditLogService auditLogService,
+            LedgerService ledgerService
+    ) {
         this.accountRepo = accountRepo;
         this.userRepo = userRepo;
         this.auditLogService = auditLogService;
+        this.ledgerService = ledgerService;
     }
 
     public record AccountRequest(
@@ -58,6 +68,7 @@ public class AdminAccountController {
     public record LedgerLine(
             LocalDateTime date,
             String description,
+            Long journalEntryId,
             BigDecimal debit,
             BigDecimal credit,
             BigDecimal balance
@@ -84,20 +95,28 @@ public class AdminAccountController {
     }
 
     @GetMapping("/{id}/ledger")
-    public ResponseEntity<LedgerResponse> ledger(@PathVariable Long id) {
+    public ResponseEntity<LedgerResponse> ledger(
+            @PathVariable Long id,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateFrom,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateTo,
+            @RequestParam(required = false) String search
+    ) {
         Optional<Account> opt = accountRepo.findById(id);
         if (opt.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Account a = opt.get();
-        LedgerLine line = new LedgerLine(
-                a.getCreatedAt() != null ? a.getCreatedAt() : LocalDateTime.now(),
-                "Account position (summary from chart of accounts)",
-                a.getDebit(),
-                a.getCredit(),
-                a.getBalance()
-        );
-        return ResponseEntity.ok(new LedgerResponse(a, List.of(line)));
+        List<LedgerLine> lines = ledgerService.getLinesForAccount(id, dateFrom, dateTo, search).stream()
+                .map(r -> new LedgerLine(
+                        r.date(),
+                        r.description(),
+                        r.journalEntryId(),
+                        r.debit(),
+                        r.credit(),
+                        r.balance()
+                ))
+                .toList();
+        return ResponseEntity.ok(new LedgerResponse(a, lines));
     }
 
     @GetMapping("/{id}")

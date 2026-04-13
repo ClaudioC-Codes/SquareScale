@@ -9,7 +9,7 @@
     const r = u ? String(u.role || "").toUpperCase() : "";
     if (!u || r !== "ADMIN") {
       if (r === "MANAGER") window.location.replace("manager-home.html");
-      else if (r === "USER") window.location.replace("regular-user-home.html");
+      else if (r === "USER" || r === "ACCOUNTANT") window.location.replace("regular-user-home.html");
       else window.location.replace("index.html");
     }
   } catch {

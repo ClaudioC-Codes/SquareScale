@@ -15,7 +15,7 @@ function getSessionUser() {
 
 const user = getSessionUser();
 const evRole = user ? String(user.role || "").toUpperCase() : "";
-if (!user || !["ADMIN", "MANAGER", "USER"].includes(evRole)) {
+if (!user || !["ADMIN", "MANAGER", "USER", "ACCOUNTANT"].includes(evRole)) {
   window.location.href = "index.html";
 } else {
   loadEvents();
@@ -46,13 +46,12 @@ async function loadEvents() {
     tbody.innerHTML = "";
     rows.forEach((e) => {
       const tr = document.createElement("tr");
-      const uid = e.performedByUserId != null ? e.performedByUserId : e.userId;
+      const accountLabel = e.accountName ?? "—";
       tr.innerHTML = `
         <td>${escapeHtml(e.id)}</td>
         <td>${escapeHtml(e.entityType)}</td>
-        <td>${escapeHtml(e.entityId)}</td>
+        <td>${escapeHtml(accountLabel)}</td>
         <td>${escapeHtml(e.action)}</td>
-        <td>${escapeHtml(uid)}</td>
         <td>${escapeHtml(e.performedByUsername ?? "—")}</td>
         <td>${formatDateTime(e.createdAt)}</td>
         <td>

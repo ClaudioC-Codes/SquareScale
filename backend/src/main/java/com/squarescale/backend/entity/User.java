@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * JPA entity mapped to the users table. Stores credentials (password as BCrypt in passwordHash),
- * role (roleID 1=USER, 2=MANAGER, 3=ADMIN), active/suspended state, and failed-login count.
+ * role (roleID 1=USER, 2=MANAGER, 3=ADMIN, 4=ACCOUNTANT), active/suspended state, and failed-login count.
  */
 @Entity
 @Table(name = "users")
@@ -29,7 +29,7 @@ public class User {
     private String email;
 
     @Column(name = "roleID")
-    private Integer roleId;   // 1=USER, 2=MANAGER, 3=ADMIN
+    private Integer roleId;   // 1=USER, 2=MANAGER, 3=ADMIN, 4=ACCOUNTANT
 
     @Column(name = "isActive")
     private boolean active = true;
@@ -85,18 +85,19 @@ public class User {
     public Integer getRoleId() { return roleId; }
     public void setRoleId(Integer roleId) { this.roleId = roleId; }
 
-    /** Maps roleID to string for API (1=USER, 2=MANAGER, 3=ADMIN). */
+    /** Maps roleID to string for API (1=USER, 2=MANAGER, 3=ADMIN, 4=ACCOUNTANT). */
     public String getRole() {
         if (roleId == null) return null;
         return switch (roleId) {
             case 3 -> "ADMIN";
             case 2 -> "MANAGER";
+            case 4 -> "ACCOUNTANT";
             case 1 -> "USER";
             default -> "USER";
         };
     }
 
-    /** Sets roleId from string (ADMIN/MANAGER/USER). */
+    /** Sets roleId from string (ADMIN/MANAGER/USER/ACCOUNTANT). */
     public void setRole(String role) {
         if (role == null) {
             this.roleId = null;
@@ -106,6 +107,7 @@ public class User {
         this.roleId = switch (r) {
             case "ADMIN" -> 3;
             case "MANAGER" -> 2;
+            case "ACCOUNTANT" -> 4;
             case "USER" -> 1;
             default -> 1;
         };

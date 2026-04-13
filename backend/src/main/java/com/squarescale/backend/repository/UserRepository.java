@@ -2,6 +2,8 @@ package com.squarescale.backend.repository;
 
 import com.squarescale.backend.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     /** Used by admin expired-passwords report: passwords older than given date. */
     List<User> findByPasswordLastSetBefore(java.time.LocalDateTime dateTime);
+
+    /** Active managers and administrators (for journal approval notifications). */
+    List<User> findByRoleIdInAndActiveTrue(Collection<Integer> roleIds);
 }

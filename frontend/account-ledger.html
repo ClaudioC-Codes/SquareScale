@@ -36,6 +36,29 @@
                 <button type="button" class="btn-back" id="btnLedgerClear" title="Clear filters">Clear filters</button>
             </div>
         </div>
+
+        <section class="add-user-section ledger-email-section" id="ledgerEmailSection" aria-label="Email staff about this account">
+            <h2>Email a manager or administrator</h2>
+            <p class="add-user-hint">Send a message about this account. Delivery is simulated in the server log unless a mail service is configured.</p>
+            <div class="ledger-email-row">
+                <label>Recipient
+                    <select id="ledgerEmailRecipient" title="Choose who should receive the message">
+                        <option value="">Loading…</option>
+                    </select>
+                </label>
+                <label>Subject
+                    <input type="text" id="ledgerEmailSubject" placeholder="Account question" title="Email subject line" autocomplete="off">
+                </label>
+            </div>
+            <label>Message
+                <textarea id="ledgerEmailBody" rows="4" class="ledger-email-body" title="Your message"></textarea>
+            </label>
+            <div class="filter-actions ledger-email-actions">
+                <button type="button" class="btn-submit" id="btnLedgerSendEmail" title="Send the message">Send email</button>
+                <span id="ledgerEmailStatus" class="message-text hidden"></span>
+            </div>
+        </section>
+
         <div class="table-wrapper">
             <table class="admin-table" id="ledgerTable">
                 <thead>

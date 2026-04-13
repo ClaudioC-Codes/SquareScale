@@ -48,7 +48,7 @@ const user = getSessionUser();
 const role = user ? String(user.role || "").toUpperCase() : "";
 const isAdmin = role === "ADMIN";
 
-if (!user || !["ADMIN", "MANAGER", "USER"].includes(role)) {
+if (!user || !["ADMIN", "MANAGER", "USER", "ACCOUNTANT"].includes(role)) {
   window.location.href = "index.html";
 } else {
   init();

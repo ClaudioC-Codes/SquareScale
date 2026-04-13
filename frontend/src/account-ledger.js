@@ -27,9 +27,10 @@ function getSessionUser() {
 
 const user = getSessionUser();
 const ledgerRole = user ? String(user.role || "").toUpperCase() : "";
-if (!user || !["ADMIN", "MANAGER", "USER"].includes(ledgerRole)) {
+if (!user || !["ADMIN", "MANAGER", "USER", "ACCOUNTANT"].includes(ledgerRole)) {
   window.location.href = "index.html";
 } else {
+  loadStaffRecipients();
   loadLedger();
 }
 
@@ -69,6 +70,10 @@ async function loadLedger() {
     const data = await res.json();
     const acc = data.account;
     const lines = data.lines || [];
+    const subj = document.getElementById("ledgerEmailSubject");
+    if (subj && acc) {
+      subj.value = `Question about account ${acc.accountNumber} — ${acc.accountName}`;
+    }
     if (sub) {
       sub.textContent = `${acc.accountNumber} — ${acc.accountName} (normal balance: ${acc.normalSide})`;
     }
@@ -131,4 +136,73 @@ document.getElementById("btnLedgerClear")?.addEventListener("click", () => {
     if (el) el.value = "";
   });
   loadLedger();
+});
+
+async function loadStaffRecipients() {
+  const sel = document.getElementById("ledgerEmailRecipient");
+  if (!sel) return;
+  try {
+    const res = await fetch(`${API_BASE_URL}/admin/contact-recipients`);
+    if (!res.ok) {
+      sel.innerHTML = "<option value=\"\">Could not load contacts</option>";
+      return;
+    }
+    const list = await res.json();
+    sel.innerHTML = "<option value=\"\">— Select recipient —</option>";
+    list.forEach((c) => {
+      const o = document.createElement("option");
+      o.value = String(c.userId);
+      o.textContent = `${c.username} (${c.role})`;
+      sel.appendChild(o);
+    });
+  } catch {
+    sel.innerHTML = "<option value=\"\">Could not load contacts</option>";
+  }
+}
+
+document.getElementById("btnLedgerSendEmail")?.addEventListener("click", async () => {
+  const sel = document.getElementById("ledgerEmailRecipient");
+  const bodyEl = document.getElementById("ledgerEmailBody");
+  const subjEl = document.getElementById("ledgerEmailSubject");
+  const status = document.getElementById("ledgerEmailStatus");
+  const rid = sel?.value?.trim();
+  const body = bodyEl?.value?.trim() || "";
+  const subject = subjEl?.value?.trim() || "SquareScale message";
+  if (!rid) {
+    if (status) {
+      status.textContent = "Choose a recipient.";
+      status.classList.remove("hidden");
+    }
+    return;
+  }
+  if (!body) {
+    if (status) {
+      status.textContent = "Enter a message.";
+      status.classList.remove("hidden");
+    }
+    return;
+  }
+  const params = new URLSearchParams();
+  params.set("message", body);
+  params.set("subject", subject);
+  try {
+    const res = await fetch(`${API_BASE_URL}/admin/users/${encodeURIComponent(rid)}/send-email`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: params.toString(),
+    });
+    const t = await res.text();
+    if (status) {
+      status.textContent = t || (res.ok ? "Sent." : "Failed.");
+      status.classList.remove("hidden", "error-text", "success-text");
+      status.classList.add(res.ok ? "success-text" : "error-text");
+    }
+    if (res.ok && bodyEl) bodyEl.value = "";
+  } catch {
+    if (status) {
+      status.textContent = "Could not reach server.";
+      status.classList.remove("hidden");
+      status.classList.add("error-text");
+    }
+  }
 });

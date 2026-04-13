@@ -15,7 +15,7 @@ function formatMoney(n) {
   const raw = sessionStorage.getItem("user");
   const u = raw ? JSON.parse(raw) : null;
   const r = u ? String(u.role || "").toUpperCase() : "";
-  if (!u || !["ADMIN", "MANAGER", "USER"].includes(r)) {
+  if (!u || !["ADMIN", "MANAGER", "USER", "ACCOUNTANT"].includes(r)) {
     window.location.href = "index.html";
   }
 })();

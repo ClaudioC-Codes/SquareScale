@@ -36,7 +36,7 @@ const user = (() => {
   try { return JSON.parse(sessionStorage.getItem("user")); } catch { return null; }
 })();
 const role = user ? String(user.role || "").toUpperCase() : "";
-if (!user || !["ADMIN", "MANAGER", "USER"].includes(role)) {
+if (!user || !["ADMIN", "MANAGER", "USER", "ACCOUNTANT"].includes(role)) {
   window.location.href = "index.html";
 }
 const isManager = role === "ADMIN" || role === "MANAGER";

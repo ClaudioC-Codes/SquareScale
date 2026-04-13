@@ -1,6 +1,6 @@
 /**
  * Login page: submits credentials to /auth/login, then redirects by role
- * (ADMIN -> admin-home, MANAGER -> manager-home, USER -> regular-user-home).
+ * (ADMIN -> admin-home, MANAGER -> manager-home, USER/ACCOUNTANT -> regular-user-home).
  */
 const API_BASE_URL = "http://localhost:8080";
 
