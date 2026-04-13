@@ -193,7 +193,8 @@ async function openDetail(id) {
     jlDetailModal?.classList.remove("hidden");
   } catch (err) {
     console.error(err);
-    alert("Could not load entry details.");
+    const hint = err && err.message ? String(err.message).slice(0, 400) : "";
+    alert(hint ? `Could not load entry details.\n\n${hint}` : "Could not load entry details.");
   }
 }
 

@@ -13,7 +13,12 @@ import java.util.Optional;
 
 public interface JournalEntryRepository extends JpaRepository<JournalEntry, Long>, JpaSpecificationExecutor<JournalEntry> {
 
-    @EntityGraph(attributePaths = {"lines", "lines.account", "attachments"})
+    /**
+     * Loads lines + account for detail view. Attachments are not on this graph: Hibernate cannot
+     * fetch two {@code List} collections in one query (multiple-bag fetch). Attachments load lazily
+     * inside the same {@code @Transactional} service method.
+     */
+    @EntityGraph(attributePaths = {"lines", "lines.account"})
     @Query("SELECT e FROM JournalEntry e WHERE e.id = :id")
     Optional<JournalEntry> findDetailById(@Param("id") Long id);
 

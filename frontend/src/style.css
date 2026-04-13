@@ -112,20 +112,28 @@ select:focus{
     box-shadow: 0 0 0 2px rgba(129,193,228,0.35);
 }
 
-/* Primary buttons */
+/* Primary & secondary actions — shared size so paired buttons align */
 #loginButton,
-.btn-submit{
-    padding: 0.6rem 1.2rem;
+.btn-submit,
+.btn-back {
+    box-sizing: border-box;
+    min-height: 2.5rem;
+    padding: 0.55rem 1.15rem;
+    font-size: 1rem;
+    line-height: 1.2;
+    border-radius: 10px;
     cursor: pointer;
+}
+
+#loginButton,
+.btn-submit {
     background: rgb(80, 160, 100);
     color: #fff;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
 }
 
 #loginButton:hover,
-.btn-submit:hover{
+.btn-submit:hover {
     background: rgb(70, 140, 85);
 }
 
@@ -163,12 +171,8 @@ select:focus{
     color: #333;
 }
 .btn-back {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
     background: rgb(129, 193, 228);
     border: 1px solid rgb(100, 160, 200);
-    border-radius: 8px;
-    font-size: 1rem;
 }
 .btn-back:hover {
     background: rgb(110, 175, 220);
@@ -206,18 +210,8 @@ select:focus{
     width: 100%;
     box-sizing: border-box;
 }
-.btn-submit {
+.add-user-form .btn-submit {
     margin-top: 0.5rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    background: rgb(80, 160, 100);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-}
-.btn-submit:hover {
-    background: rgb(70, 140, 85);
 }
 .message-text {
     margin-top: 0.75rem;
@@ -311,6 +305,7 @@ select:focus{
     margin-top: 1rem;
     display: flex;
     gap: 0.75rem;
+    align-items: center;
 }
 .modal-actions .btn-back,
 .modal-actions .btn-submit {
@@ -655,6 +650,9 @@ button.app-nav-logout:hover {
     align-items: center;
 }
 .account-filters .filter-actions .btn-submit,
+.account-filters .filter-actions .btn-back {
+    margin-top: 0;
+}
 .ledger-email-section {
     margin-top: 1.25rem;
 }
@@ -687,15 +685,6 @@ button.app-nav-logout:hover {
 }
 
 .account-filters .filter-actions .btn-back {
-    margin-top: 0;
-    min-width: 11.5rem;
-    padding: 0.6rem 1.2rem;
-    border-radius: 10px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    line-height: 1.2;
-}
-.account-filters .filter-actions .btn-back {
     background: rgb(255, 214, 214);
     color: rgb(90, 35, 35);
     border: 1px solid rgb(220, 160, 160);
@@ -727,9 +716,9 @@ button.app-nav-logout:hover {
    ================================================================ */
 
 .journal-hub-section { max-width: 960px; }
-.journal-hub-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 0.5rem; }
+.journal-hub-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.25rem; margin-top: 0.5rem; align-items: stretch; }
 @media (max-width: 560px) { .journal-hub-cards { grid-template-columns: 1fr; } }
-.journal-hub-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.25rem 1.1rem; border: 1px solid var(--ss-border); border-radius: 12px; background: #fff; text-decoration: none; color: var(--ss-text); transition: box-shadow 0.15s, border-color 0.15s; }
+.journal-hub-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.25rem 1.1rem; border: 1px solid var(--ss-border); border-radius: 12px; background: #fff; text-decoration: none; color: var(--ss-text); transition: box-shadow 0.15s, border-color 0.15s; min-height: 10.5rem; box-sizing: border-box; }
 .journal-hub-card:hover { border-color: var(--ss-accent-dark); box-shadow: 0 4px 16px rgba(0,80,160,0.10); }
 .journal-hub-icon { font-size: 1.75rem; line-height: 1; }
 .journal-hub-card strong { font-size: 1.05rem; color: rgb(30,80,140); }
@@ -747,8 +736,7 @@ button.app-nav-logout:hover {
 .je-lines-table { min-width: 620px; }
 .je-lines-table tfoot td { font-weight: 700; background: #f3f6fb; border-top: 2px solid var(--ss-border); }
 .je-totals-label { text-align: right; padding-right: 1rem; color: #555; }
-.je-line-actions { display: flex; gap: 0.6rem; margin-bottom: 1rem; }
-.je-add-btn { font-size: 0.9rem; padding: 0.4rem 0.9rem; }
+.je-line-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1rem; align-items: center; }
 .je-account-select { width: 220px; font-size: 0.85rem; }
 .je-amount-input { width: 90px; text-align: right; font-variant-numeric: tabular-nums; }
 .je-desc-input { width: 150px; font-size: 0.85rem; }
@@ -770,12 +758,16 @@ button.app-nav-logout:hover {
 .je-file-list li + li { margin-top: 0.2rem; }
 .je-file-list a { color: rgb(40,100,180); text-decoration: none; }
 .je-file-list a:hover { text-decoration: underline; }
-.je-submit-row { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; }
+.je-submit-row { display: flex; gap: 0.75rem; margin-top: 1rem; flex-wrap: wrap; align-items: center; }
 
 .journal-list-main, .jl-section { max-width: 1100px; }
 .jl-filters { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.5rem 0.75rem; margin-bottom: 1rem; align-items: end; }
 .jl-filters label { display: flex; flex-direction: column; gap: 0.2rem; font-size: 0.85rem; font-weight: 600; }
-.jl-filters .filter-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.jl-filters .filter-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.jl-filters .filter-actions .btn-submit,
+.jl-filters .filter-actions .btn-back {
+    margin-top: 0;
+}
 .jl-table-wrap { max-height: 400px; }
 .je-status-badge { display: inline-block; padding: 0.15rem 0.55rem; border-radius: 6px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.03em; }
 .je-status-pending  { background: rgb(255,240,200); color: rgb(130,80,0); }
@@ -805,7 +797,7 @@ button.app-nav-logout:hover {
 .report-toolbar { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: flex-end; margin-bottom: 0.75rem; }
 .report-toolbar label { display: flex; flex-direction: column; gap: 0.2rem; font-weight: 600; font-size: 0.88rem; }
 .report-toolbar select, .report-toolbar input[type="date"] { font-size: 0.95rem; padding: 0.4rem 0.55rem; }
-.report-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+.report-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; align-items: center; }
 .report-output { margin-top: 1rem; }
 .report-placeholder { color: #666; margin: 0; }
 .report-title { margin: 0 0 0.75rem; font-size: 1.25rem; color: rgb(30, 80, 130); }

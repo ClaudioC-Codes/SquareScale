@@ -187,13 +187,18 @@ public class JournalService {
         JournalEntry e = journalEntryRepository.findDetailById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal entry not found."));
         List<JournalLineOut> lines = e.getLines().stream()
-                .map(l -> new JournalLineOut(
-                        l.getLineType(),
-                        l.getAccount().getAccountNumber(),
-                        l.getAccount().getAccountName(),
-                        l.getAmount(),
-                        l.getDescription()
-                ))
+                .map(l -> {
+                    Account acc = l.getAccount();
+                    String num = acc != null && acc.getAccountNumber() != null ? acc.getAccountNumber() : "";
+                    String name = acc != null && acc.getAccountName() != null ? acc.getAccountName() : "";
+                    return new JournalLineOut(
+                            l.getLineType(),
+                            num,
+                            name,
+                            l.getAmount(),
+                            l.getDescription()
+                    );
+                })
                 .toList();
         List<JournalAttachmentOut> atts = e.getAttachments().stream()
                 .map(a -> new JournalAttachmentOut(a.getId(), a.getFilename()))
