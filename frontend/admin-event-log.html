@@ -32,6 +32,7 @@
                     <th>Changed by (user ID)</th>
                     <th>Username</th>
                     <th>When</th>
+                    <th>Before / After</th>
                 </tr>
                 </thead>
                 <tbody></tbody>
@@ -39,6 +40,24 @@
         </div>
         <p id="eventLogMessage" class="message-text hidden"></p>
     </section>
+    <div id="eventImageModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="eventImageTitle">
+        <div class="modal-content event-image-modal">
+            <h3 id="eventImageTitle">Account snapshot</h3>
+            <div class="event-image-grid">
+                <div>
+                    <h4 class="event-image-label event-before-label">Before</h4>
+                    <pre id="eventBeforePre" class="event-snapshot-pre">—</pre>
+                </div>
+                <div>
+                    <h4 class="event-image-label event-after-label">After</h4>
+                    <pre id="eventAfterPre" class="event-snapshot-pre">—</pre>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-submit" id="btnEventImageClose" title="Close">Close</button>
+            </div>
+        </div>
+    </div>
 </main>
 
 <script src="src/app-shell.js"></script>

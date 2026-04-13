@@ -17,10 +17,26 @@
 
 <main class="home-main">
     <h1 class="home-title">Journal</h1>
-    <p class="home-desc">Record and review journal entries (general journal). Full journalizing workflows can be connected here in a future iteration.</p>
+    <p class="home-desc">Create and review journal entries. Managers can approve or reject entries submitted by accountants.</p>
+
+    <section class="add-user-section journal-hub-section">
+        <div class="journal-hub-cards">
+            <a href="journal-entry.html" class="journal-hub-card" title="Create a new journal entry">
+                <span class="journal-hub-icon">📝</span>
+                <strong>New Journal Entry</strong>
+                <span class="journal-hub-desc">Create a regular or adjusting entry. Attach source documents and submit for approval.</span>
+            </a>
+            <a href="journal-list.html" class="journal-hub-card" title="View all journal entries">
+                <span class="journal-hub-icon">📋</span>
+                <strong>View Journal Entries</strong>
+                <span class="journal-hub-desc">Browse, search, and filter all entries. Managers can approve or reject pending entries.</span>
+            </a>
+        </div>
+    </section>
 </main>
 
 <script src="src/app-shell.js"></script>
 <script src="src/journal-page.js"></script>
+<script src="src/post-login.js"></script>
 </body>
 </html>

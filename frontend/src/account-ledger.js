@@ -55,7 +55,8 @@ async function loadLedger() {
     return;
   }
   try {
-    const res = await fetch(`${API_BASE_URL}/admin/accounts/${id}/ledger`);
+    const qs = buildLedgerQuery(id);
+    const res = await fetch(`${API_BASE_URL}/admin/accounts/${id}/ledger${qs ? "?" + qs : ""}`);
     if (!res.ok) {
       const t = await res.text();
       if (msg) {
@@ -80,9 +81,14 @@ async function loadLedger() {
       tbody.innerHTML = "";
       lines.forEach((line) => {
         const tr = document.createElement("tr");
+        const prCell = line.journalEntryId
+        ? `<td><a href="journal-list.html?entryId=${encodeURIComponent(line.journalEntryId)}" class="link-inline pr-link" title="View the journal entry that created this line">JE-${escapeHtml(line.journalEntryId)}</a></td>`
+        : `<td class="pr-cell">—</td>`;
+
         tr.innerHTML = `
           <td>${formatDateTime(line.date)}</td>
           <td>${escapeHtml(line.description)}</td>
+          ${prCell}
           <td class="num-cell">${formatMoney(line.debit)}</td>
           <td class="num-cell">${formatMoney(line.credit)}</td>
           <td class="num-cell">${formatMoney(line.balance)}</td>
@@ -105,3 +111,24 @@ function escapeHtml(s) {
   d.textContent = s;
   return d.innerHTML;
 }
+
+function buildLedgerQuery(id) {
+  const p = new URLSearchParams();
+  p.set("accountId", id);
+  const from = document.getElementById("ledgerDateFrom")?.value;
+  if (from) p.set("dateFrom", from);
+  const to = document.getElementById("ledgerDateTo")?.value;
+  if (to) p.set("dateTo", to);
+  const search = document.getElementById("ledgerSearch")?.value?.trim();
+  if (search) p.set("search", search);
+  return p.toString();
+}
+
+document.getElementById("btnLedgerApply")?.addEventListener("click", loadLedger);
+document.getElementById("btnLedgerClear")?.addEventListener("click", () => {
+  ["ledgerDateFrom", "ledgerDateTo", "ledgerSearch"].forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) el.value = "";
+  });
+  loadLedger();
+});

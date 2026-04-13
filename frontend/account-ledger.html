@@ -21,12 +21,28 @@
 
     <section class="add-user-section" id="ledgerSection">
         <h2 id="ledgerAccountTitle">—</h2>
+        <div class="account-filters ledger-filters">
+            <label>Date from
+                <input type="date" id="ledgerDateFrom" title="Show entries on or after this date">
+            </label>
+            <label>Date to
+                <input type="date" id="ledgerDateTo" title="Show entries on or before this date">
+            </label>
+            <label>Search (account name or amount)
+                <input type="text" id="ledgerSearch" placeholder="Name or amount…" autocomplete="off" title="Search by account name or amount">
+            </label>
+            <div class="filter-actions">
+                <button type="button" class="btn-submit" id="btnLedgerApply" title="Apply filters">Apply filters</button>
+                <button type="button" class="btn-back" id="btnLedgerClear" title="Clear filters">Clear filters</button>
+            </div>
+        </div>
         <div class="table-wrapper">
             <table class="admin-table" id="ledgerTable">
                 <thead>
                 <tr>
                     <th>Date</th>
                     <th>Description</th>
+                    <th>PR</th>
                     <th class="num-cell">Debit</th>
                     <th class="num-cell">Credit</th>
                     <th class="num-cell">Balance</th>
