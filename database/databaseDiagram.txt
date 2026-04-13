@@ -1,121 +1,128 @@
-+------------------------------+
-|            users             |
-+------------------------------+
-| PK userID : INT              |
-| username                     |
-| passwordHash                 |
-| email                        |
-| createdAt : TIMESTAMP        |
-| roleID : INT                 |
-| isActive : TINYINT           |
-| firstName                    |
-| lastName                     |
-| failed_login_attempts : INT  |
-| passwordLastSet : DATETIME   |
-| suspendedUntil : DATETIME    |
-+------------------------------+
-        │
-        │ (1-to-many)
-        ▼
-+------------------------------+
-|           accounts           |
-+------------------------------+
-| PK accountId : INT           |
-| accountName                  |
-| accountNumber                |
-| description                  |
-| normalSide                   |
-| accountCategory              |
-| accountSubcategory           |
-| initialBalance : DECIMAL     |
-| debit : DECIMAL              |
-| credit : DECIMAL             |
-| balance : DECIMAL            |
-| createdAt : DATETIME         |
-| FK userId : INT              |
-| accountOrder                 |
-| statementType                |
-| commentText                  |
-| isActive : TINYINT           |
-+------------------------------+
-        │
-        │ (1-to-many)
-        ├──────────────────────────────┐
-        ▼                              ▼
-+------------------------------+   +------------------------------+
-|        journal_lines         |   |        ledger_entries        |
-+------------------------------+   +------------------------------+
-| PK line_id : INT             |   | PK ledger_id : INT           |
-| FK journal_id : INT          |   | FK account_id : INT          |
-| FK account_id : INT          |   | FK journal_id : INT          |
-| debit_amount : DECIMAL       |   | entry_date : DATETIME        |
-| credit_amount : DECIMAL      |   | debit_amount : DECIMAL       |
-| description                  |   | credit_amount : DECIMAL      |
-| created_at : DATETIME        |   | balance_after : DECIMAL      |
-+------------------------------+   | post_reference              |
-                                  | created_at : DATETIME       |
-                                  +------------------------------+
-            ▲                              ▲
-            │ (many-to-1)                  │ (many-to-1)
-            └───────────────┬──────────────┘
-                            │
-                            ▼
-                +------------------------------+
-                |       journal_entries        |
-                +------------------------------+
-                | PK journal_id : INT          |
-                | FK created_by : INT          |
-                | FK approved_by : INT         |
-                | status : INT                 |
-                | total_debit : DECIMAL        |
-                | total_credit : DECIMAL       |
-                | submitted_at : DATETIME      |
-                | approved_at : DATETIME       |
-                | rejection                   |
-                | created_at : DATETIME        |
-                +------------------------------+
-                            │
-                            │ (many-to-1)
-                            ▼
-                     +------------------------------+
-                     |            users             |
-                     +------------------------------+
++----------------------+
+|        users         |
+|----------------------|
+| PK userID INT        |
+| username VARCHAR(16) |
+| passwordHash VARCHAR |─────────────────────────────────────────────
+| email VARCHAR(255)   |                                            |
+| createdAt TIMESTAMP  |                                            |
+| roleID INT           |                                            |
+| isActive TINYINT     |                                            |
+| firstName VARCHAR(45)|                                            |
+| lastName VARCHAR(45) |                                            |
+| failed_login_attempts INT |                                       |
++----------------------+                                            |
+         │                                                          |   1:M
+         │ 1:M                                                      ▼ To event_log
+         ▼
 
-===========================================================================================
++----------------------+
+|      accounts        |
+|----------------------|
+| PK accountId INT     |
+| accountName VARCHAR  |
+| accountNumber VARCHAR|
+| description VARCHAR  |
+| normalSide VARCHAR   |
+| accountCategory VARCHAR |
+| accountSubcategory VARCHAR |
+| initialBalance DECIMAL(15,2) |
+| debit DECIMAL(15,2) |
+| credit DECIMAL(15,2)|
+| balance DECIMAL(15,2)|
+| createdAt DATETIME  |
+| FK userId INT       |
+| accountOrder VARCHAR|
+| statementType VARCHAR|
+| commentText VARCHAR |
+| isActive TINYINT    |
++----------------------+
+         │
+         │ 1:M
+         ▼
 
-+------------------------------+
-|        transactions          |
-+------------------------------+
-| PK transactionID : INT       |
-| FK userID : INT              |
-| amount : FLOAT               |
-| type                         |
-| timestamp : TIMESTAMP        |
-+------------------------------+
-        ▲
-        │ (many-to-1)
-        │
-+------------------------------+
-|            users             |
-+------------------------------+
++----------------------+
+|    journal_lines     |
+|----------------------|
+| PK line_id INT       |
+| FK journal_id INT    |
+| FK account_id INT    |
+| debit_amount DECIMAL |
+| credit_amount DECIMAL|
+| description VARCHAR  |
+| created_at DATETIME  |
++----------------------+
 
-===========================================================================================
+         ▲
+         │ M:1
+         │
++----------------------+
+|  journal_entries     |
+|----------------------|
+| PK journal_id INT    |
+| FK created_by INT    |
+| status INT           |
+| total_debit DECIMAL  |
+| total_credit DECIMAL |
+| submitted_at DATETIME|
+| FK approved_by INT   |
+| approved_at DATETIME |
+| rejection_reason VARCHAR |
+| created_at DATETIME  |
+| is_adjusting TINYINT |
+| description LONGTEXT |
++----------------------+
+         │                                                         | (Arrow from Users above that ends)
+         │ 1:M                                                     |
+         ├───────────────┬────────────────┐                        |
+         ▼               ▼                ▼                        |
+                                                                   ▼   
++----------------------+   +----------------------+   +----------------------+
+|   ledger_entries     |   | journal_attachments  |   |      event_log       |
+|----------------------|   |----------------------|   |----------------------|
+| PK ledger_id INT     |   | PK attachment_id INT |   | PK eventId BIGINT    |
+| FK account_id INT    |   | FK journal_id INT    |   | entityType VARCHAR   |
+| FK journal_id INT    |   | file_name VARCHAR    |   | entityId BIGINT      |
+| entry_date DATETIME  |   | file_path VARCHAR    |   | action VARCHAR       |
+| debit_amount DECIMAL |   | file_type VARCHAR    |   | FK userId INT        |
+| credit_amount DECIMAL|   | uploaded_at DATETIME |   | createdAt DATETIME   |
+| balance_after DECIMAL|   +----------------------+   | beforeImage LONGTEXT |
+| post_reference VARCHAR|                              | afterImage LONGTEXT  |
+| created_at DATETIME  |                              +----------------------+
++----------------------+
+         ▲
+         │ M:1
+         │
+   +----------------------+
+   |      accounts        |
+   +----------------------+
 
-+------------------------------+
-|          event_log           |
-+------------------------------+
-| PK eventId : BIGINT          |
-| entityType                   |
-| entityId : BIGINT            |
-| action                       |
-| FK userId : INT              |
-| createdAt : DATETIME         |
-| beforeImage : LONGTEXT       |
-| afterImage : LONGTEXT        |
-+------------------------------+
-        ▲
-        │ (many-to-1)
-        │
-+------------------------------+
-|            users             |
-+------------------------------+
+         ▲
+         │
+         │
++----------------------+
+|    transactions      |
+|----------------------|
+| PK transactionID INT |
+| FK userID INT        |
+| amount FLOAT         |
+| type VARCHAR         |
+| timestamp TIMESTAMP  |
++----------------------+
+
++----------------------+
+|   notifications      |
+|----------------------|
+| PK notification_id   |
+| FK user_id INT       |
+| message LONGTEXT     |
+| is_read TINYINT      |
+| created_at DATETIME  |
++----------------------+
+
++----------------------+
+|   error_messages     |
+|----------------------|
+| PK error_id INT      |
+| message_text VARCHAR |
++----------------------+
