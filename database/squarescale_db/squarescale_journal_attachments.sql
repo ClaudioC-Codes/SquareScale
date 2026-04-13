@@ -16,41 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `journal_entries`
+-- Table structure for table `journal_attachments`
 --
 
-DROP TABLE IF EXISTS `journal_entries`;
+DROP TABLE IF EXISTS `journal_attachments`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `journal_entries` (
+CREATE TABLE `journal_attachments` (
+  `attachment_id` int NOT NULL,
   `journal_id` int NOT NULL,
-  `created_by` int DEFAULT NULL,
-  `status` int DEFAULT NULL,
-  `total_debit` decimal(10,0) DEFAULT NULL,
-  `total_credit` decimal(10,0) DEFAULT NULL,
-  `submitted_at` datetime DEFAULT NULL,
-  `approved_by` int DEFAULT NULL,
-  `approved_at` datetime DEFAULT NULL,
-  `rejection_reason` varchar(2555) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
-  `is_adjusting` tinyint DEFAULT NULL,
-  `description` longtext,
-  PRIMARY KEY (`journal_id`),
+  `file_name` varchar(45) DEFAULT NULL,
+  `file_path` varchar(45) DEFAULT NULL,
+  `file_type` varchar(45) DEFAULT NULL,
+  `uploaded_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`attachment_id`),
+  UNIQUE KEY `attachment_id_UNIQUE` (`attachment_id`),
   UNIQUE KEY `journal_id_UNIQUE` (`journal_id`),
-  KEY `created_by_idx` (`created_by`),
-  KEY `approved_by_idx` (`approved_by`),
-  CONSTRAINT `fk_approved_by` FOREIGN KEY (`approved_by`) REFERENCES `users` (`userID`),
-  CONSTRAINT `fk_created_by` FOREIGN KEY (`created_by`) REFERENCES `users` (`userID`)
+  CONSTRAINT `journal_id2` FOREIGN KEY (`journal_id`) REFERENCES `journal_entries` (`journal_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `journal_entries`
+-- Dumping data for table `journal_attachments`
 --
 
-LOCK TABLES `journal_entries` WRITE;
-/*!40000 ALTER TABLE `journal_entries` DISABLE KEYS */;
-/*!40000 ALTER TABLE `journal_entries` ENABLE KEYS */;
+LOCK TABLES `journal_attachments` WRITE;
+/*!40000 ALTER TABLE `journal_attachments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `journal_attachments` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -62,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-12 20:50:13
+-- Dump completed on 2026-04-12 20:50:14
