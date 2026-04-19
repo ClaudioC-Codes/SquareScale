@@ -684,3 +684,193 @@ button.app-nav-logout:hover {
 .event-before-label { color: rgb(150,60,20); }
 .event-after-label  { color: rgb(30,110,55); }
 .event-snapshot-pre { background: #f3f6fb; border: 1px solid var(--ss-border); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem; font-family: ui-monospace, monospace; white-space: pre-wrap; word-break: break-word; max-height: 320px; overflow-y: auto; margin: 0; }
+
+/* ================================================================
+   Sprint 5: Dashboard — notifications, quick-nav, ratio cards
+   ================================================================ */
+
+#dashRoot {
+    width: 100%;
+}
+
+/* Notifications banner */
+.dash-notifications {
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.dash-notification {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.65rem 1rem;
+    border-radius: 10px;
+    font-size: 0.92rem;
+    flex-wrap: wrap;
+}
+.dash-notification-info    { background: rgb(225,240,255); border: 1px solid rgb(160,200,240); color: rgb(30,70,130); }
+.dash-notification-warning { background: rgb(255,245,210); border: 1px solid rgb(220,185,80);  color: rgb(110,70,0); }
+.dash-notif-link {
+    font-weight: 600;
+    color: inherit;
+    text-decoration: underline;
+    white-space: nowrap;
+}
+.dash-notif-link:hover { opacity: 0.8; }
+
+/* Quick-nav cards */
+.dash-quicknav {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.85rem;
+    margin-bottom: 1.5rem;
+}
+.dash-nav-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    padding: 1rem 1rem;
+    border: 1px solid var(--ss-border);
+    border-radius: 12px;
+    background: #fff;
+    text-decoration: none;
+    color: var(--ss-text);
+    transition: box-shadow 0.15s, border-color 0.15s, background 0.15s;
+}
+.dash-nav-card:hover {
+    border-color: var(--ss-accent-dark);
+    background: #f0f7ff;
+    box-shadow: 0 3px 12px rgba(0,80,160,0.10);
+}
+.dash-nav-icon  { font-size: 1.6rem; line-height: 1; }
+.dash-nav-label { font-size: 0.95rem; color: rgb(30,80,140); }
+.dash-nav-desc  { font-size: 0.8rem;  color: #666; line-height: 1.35; }
+
+/* Ratio section */
+.dash-ratios-section {
+    max-width: 1100px;
+    margin-top: 0 !important;
+}
+.dash-ratios-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.25rem;
+}
+.dash-section-heading {
+    margin: 0;
+    font-size: 1.1rem;
+}
+.dash-refresh-btn {
+    font-size: 0.88rem;
+    padding: 0.3rem 0.75rem;
+}
+.dash-loading {
+    color: #888;
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+/* Ratio card grid */
+.dash-ratio-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 0.85rem;
+    margin: 0.85rem 0;
+}
+
+/* Individual ratio card */
+.dash-ratio-card {
+    border-radius: 12px;
+    padding: 1rem;
+    border: 2px solid transparent;
+    cursor: default;
+    transition: box-shadow 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+.dash-ratio-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+}
+
+/* Color variants */
+.dash-card-green  { background: rgb(236,252,240); border-color: rgb(100,190,120); }
+.dash-card-yellow { background: rgb(255,251,225); border-color: rgb(220,185,60);  }
+.dash-card-red    { background: rgb(255,237,235); border-color: rgb(210,100,85);  }
+.dash-card-na     { background: #f3f6fb;          border-color: var(--ss-border); }
+
+/* Card internals */
+.dash-card-status-row { margin-bottom: 0.15rem; }
+.dash-card-status {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 6px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+.dash-card-status-green  { background: rgb(200,240,210); color: rgb(20,110,45); }
+.dash-card-status-yellow { background: rgb(255,235,160); color: rgb(110,70,0);  }
+.dash-card-status-red    { background: rgb(255,210,205); color: rgb(160,40,30); }
+.dash-card-status-na     { background: #e0e4ea;          color: #555;           }
+
+.dash-card-value {
+    font-size: 1.65rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    line-height: 1.1;
+    color: var(--ss-text);
+}
+.dash-card-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #333;
+}
+.dash-card-desc {
+    font-size: 0.75rem;
+    color: #666;
+    line-height: 1.35;
+    margin-top: 0.2rem;
+}
+.dash-card-normal {
+    font-size: 0.7rem;
+    color: #888;
+    margin-top: 0.1rem;
+    font-style: italic;
+}
+
+/* Legend */
+.dash-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.25rem;
+    font-size: 0.82rem;
+    color: #555;
+    margin-top: 0.25rem;
+}
+.dash-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+.dash-dot {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.dash-dot-green  { background: rgb(80,170,100); }
+.dash-dot-yellow { background: rgb(220,175,30); }
+.dash-dot-red    { background: rgb(210,75,65);  }
+.dash-dot-na     { background: #bbb;            }
+
+/* home-main needs more width to accommodate the dashboard */
+.home-main {
+    max-width: 1100px;
+}

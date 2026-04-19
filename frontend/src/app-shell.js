@@ -1,7 +1,4 @@
-/**
- * Shared top layout: logo + username (top-left), calendar popover, service nav, Help modal.
- * Add class "has-app-shell" to <body>. Place this script immediately after <body> opens, before main content.
- */
+
 (function () {
   if (!document.body || !document.body.classList.contains("has-app-shell")) {
     return;
