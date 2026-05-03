@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- Journalizing placeholder — navigation hub for future journal entries. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Journal</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main">
+    <h1 class="home-title">Journal</h1>
+    <p class="home-desc">Create and review journal entries. Managers can approve or reject entries submitted by accountants.</p>
+
+    <section class="add-user-section journal-hub-section">
+        <h2 class="dash-section-heading journal-hub-section-title">Journal services</h2>
+        <p class="add-user-hint journal-hub-section-hint">Choose an action below. Your role controls which operations are available elsewhere in the app.</p>
+        <div class="journal-hub-cards">
+            <a href="journal-entry.html" class="journal-hub-card" title="Create a new journal entry">
+                <span class="journal-hub-icon">📝</span>
+                <strong>New Journal Entry</strong>
+                <span class="journal-hub-desc">Create a regular or adjusting entry. Attach source documents and submit for approval.</span>
+            </a>
+            <a href="journal-list.html" class="journal-hub-card" title="View all journal entries">
+                <span class="journal-hub-icon">📋</span>
+                <strong>View Journal Entries</strong>
+                <span class="journal-hub-desc">Browse, search, and filter all entries. Managers can approve or reject pending entries.</span>
+            </a>
+        </div>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/journal-page.js"></script>
+<script src="src/post-login.js"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!-- Account ledger: opened from chart of accounts row click. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Account Ledger</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main ledger-main">
+    <h1 class="home-title">Account ledger</h1>
+    <p class="home-desc" id="ledgerSubtitle">Loading…</p>
+
+    <section class="add-user-section" id="ledgerSection">
+        <h2 class="dash-section-heading" id="ledgerAccountTitle">—</h2>
+        <div class="account-filters ledger-filters">
+            <label>Date from
+                <input type="date" id="ledgerDateFrom" title="Show entries on or after this date">
+            </label>
+            <label>Date to
+                <input type="date" id="ledgerDateTo" title="Show entries on or before this date">
+            </label>
+            <label>Search (account name or amount)
+                <input type="text" id="ledgerSearch" placeholder="Name or amount…" autocomplete="off" title="Search by account name or amount">
+            </label>
+            <div class="filter-actions">
+                <button type="button" class="btn-submit" id="btnLedgerApply" title="Apply filters">Apply filters</button>
+                <button type="button" class="btn-back" id="btnLedgerClear" title="Clear filters">Clear filters</button>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="admin-table" id="ledgerTable">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>PR</th>
+                    <th class="num-cell">Debit</th>
+                    <th class="num-cell">Credit</th>
+                    <th class="num-cell">Balance</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <p id="ledgerMessage" class="message-text hidden"></p>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/account-ledger.js"></script>
+</body>
+</html>

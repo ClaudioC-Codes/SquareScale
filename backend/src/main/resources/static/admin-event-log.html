@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!-- Administrator: audit event log (who changed what account). -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Event Log (Admin)</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main">
+    <h1 class="home-title">Event log</h1>
+    <p class="home-desc">Account changes (create, update, deactivate) with the user who performed each action.</p>
+
+    <section class="add-user-section">
+        <h2 class="dash-section-heading">Recent events</h2>
+        <div class="table-wrapper event-log-table-wrap">
+            <table class="admin-table" id="eventLogTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Entity ID</th>
+                    <th>Action</th>
+                    <th>Changed by (user ID)</th>
+                    <th>Username</th>
+                    <th>When</th>
+                    <th>Before / After</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <p id="eventLogMessage" class="message-text hidden"></p>
+    </section>
+    <div id="eventImageModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="eventImageTitle">
+        <div class="modal-content event-image-modal">
+            <h3 id="eventImageTitle">Account snapshot</h3>
+            <div class="event-image-grid">
+                <div>
+                    <h4 class="event-image-label event-before-label">Before</h4>
+                    <pre id="eventBeforePre" class="event-snapshot-pre">—</pre>
+                </div>
+                <div>
+                    <h4 class="event-image-label event-after-label">After</h4>
+                    <pre id="eventAfterPre" class="event-snapshot-pre">—</pre>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn-submit" id="btnEventImageClose" title="Close">Close</button>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/admin-event-log.js"></script>
+</body>
+</html>

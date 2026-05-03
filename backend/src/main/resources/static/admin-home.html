@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<!-- Admin home: All Users table, Expired Passwords report, Edit User modal. Add User is on admin-add-user.html. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Administrator Home</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main">
+    <section class="add-user-section" id="userListSection">
+        <div class="dash-ratios-header">
+            <h2 class="dash-section-heading">All Users</h2>
+            <a href="admin-add-user.html" class="btn-small dash-panel-back-link" title="Create a new user account">+ Add User</a>
+        </div>
+        <p class="add-user-hint">View all users in the system and manage their status.</p>
+        <div id="editUserModal" class="modal hidden">
+            <div class="modal-content modal-content--admin">
+                <h3 class="modal-title">Edit User</h3>
+                <form id="editUserForm">
+                    <input type="hidden" id="editUserId">
+                    <label for="editFirstName">First name</label>
+                    <input type="text" id="editFirstName" maxlength="45">
+                    <label for="editLastName">Last name</label>
+                    <input type="text" id="editLastName" maxlength="45">
+                    <label for="editEmail">Email</label>
+                    <input type="email" id="editEmail">
+                    <label for="editRole">Role</label>
+                    <select id="editRole">
+                        <option value="USER">Regular User (Accountant)</option>
+                        <option value="MANAGER">Manager</option>
+                        <option value="ADMIN">Administrator</option>
+                    </select>
+                    <label for="editNewPassword">New password (leave blank to keep current)</label>
+                    <input type="password" id="editNewPassword" placeholder="Min 8 chars, letter, number, special char">
+                    <p id="editPasswordError" class="error-text hidden"></p>
+                    <div class="modal-actions">
+                        <button type="button" id="editUserCancel" class="btn-back">Cancel</button>
+                        <button type="submit" class="btn-submit">Save</button>
+                    </div>
+                </form>
+                <p id="editUserMessage" class="message-text hidden"></p>
+            </div>
+        </div>
+        <div class="table-wrapper">
+            <table class="admin-table" id="userTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Email</th>
+                    <th>Active</th>
+                    <th>Suspended Until</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Filled by admin-home.js -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="add-user-section" id="expiredPasswordsSection">
+        <h2 class="dash-section-heading">Expired Passwords</h2>
+        <p class="add-user-hint">Users whose passwords are older than 3 months.</p>
+        <div class="table-wrapper">
+            <table class="admin-table" id="expiredTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Password Last Set</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Filled by admin-home.js -->
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/admin-home.js"></script>
+<script src="src/dashboard.js"></script>
+</body>
+</html>
