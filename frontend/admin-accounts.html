@@ -20,7 +20,9 @@
     <p class="home-desc">Choose a service, then complete the form or use search and filters below.</p>
 
     <section class="add-user-section" id="serviceSection">
-        <label for="serviceSelect"><strong>Select service</strong></label>
+        <h2 class="dash-section-heading">Choose a service</h2>
+        <p class="add-user-hint">Select an operation to show the matching form or report below.</p>
+        <label for="serviceSelect">Service</label>
         <select id="serviceSelect" class="service-select" title="Pick Add, View, Edit, or Deactivate before using that part of the page">
             <option value="">— Choose —</option>
             <option value="add">Add account</option>
@@ -32,14 +34,14 @@
 
     <!-- Add -->
     <section id="panelAdd" class="add-user-section hidden">
-        <h2>Add account</h2>
+        <h2 class="dash-section-heading">Add account</h2>
         <p class="add-user-hint">Account number: digits only, must start with 1–5 (asset, liability, equity, revenue, expense). Balance = Initial + Debit − Credit unless you enter Balance explicitly.</p>
         <form id="formAdd" class="add-user-form account-form-grid"></form>
     </section>
 
     <!-- View -->
     <section id="panelView" class="add-user-section hidden">
-        <h2>View accounts</h2>
+        <h2 class="dash-section-heading">View accounts</h2>
         <p class="add-user-hint">Use quick search or filters to narrow the list. <strong>Click a row</strong> to open that account’s ledger.</p>
 
         <div class="account-filters">
@@ -88,7 +90,7 @@
 
     <!-- Edit -->
     <section id="panelEdit" class="add-user-section hidden">
-        <h2>Edit account</h2>
+        <h2 class="dash-section-heading">Edit account</h2>
         <label for="editPick">Select account</label>
         <select id="editPick" title="Choose which account to edit"><option value="">— Select —</option></select>
         <form id="formEdit" class="add-user-form account-form-grid"></form>
@@ -96,7 +98,7 @@
 
     <!-- Deactivate -->
     <section id="panelDeactivate" class="add-user-section hidden">
-        <h2>Deactivate account</h2>
+        <h2 class="dash-section-heading">Deactivate account</h2>
         <p class="add-user-hint">Only accounts with balance ≤ 0 can be deactivated.</p>
         <label for="deactPick">Select account</label>
         <select id="deactPick" title="Choose which account to deactivate"><option value="">— Select —</option></select>

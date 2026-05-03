@@ -1,0 +1,64 @@
+VIDEO DEMO — Requirements vs SquareScale (Brandon accounts)
+===========================================================
+Logins (typical class seed): regularBrandon / managerBrandon / adminBrandon — password 1234
+
+Load demo numbers: run video_demo_brandon_seed.sql in MySQL after the app has created
+ss_journal_entries / ss_journal_lines tables (start Spring Boot once with ddl-auto=update).
+
+
+Requirement 1 — Financial ratios & dashboard after login
+----------------------------------------------------------
+• All three users land on their role home page; dashboard.js injects the same
+  “Financial Ratios Dashboard” with live GET /reports/ratios.
+• Say on camera: “Once authenticated, everyone sees ratio cards fed from the chart
+  of accounts.”
+
+
+Requirement 2 — Menus on the landing page by role
+-------------------------------------------------
+TOP BAR (app shell — all logged-in roles):
+  Home | Chart of Accounts | Event log | Journal | Log out
+
+QUICK NAV CARDS (injected on the home page):
+  • regularBrandon (accountant): Chart of Accounts, Journal, Event log  (3 cards)
+  • managerBrandon:               same 3 cards
+  • adminBrandon:                 those 3 + “Users & reports” + “Add User” → admin-home.html / admin-add-user.html  (5 cards)
+
+Say: “Admins get Users & reports and Add User shortcuts; managers and accountants see
+the operational links but not user admin.”
+
+
+Requirement 3 — Important messages (e.g. pending journals)
+------------------------------------------------------------
+With video_demo_brandon_seed.sql applied:
+  • Banner shows 2 pending journal entries (created by regularBrandon).
+  • Wording:
+      - adminBrandon & managerBrandon: “…awaiting your approval” + Review link
+      - regularBrandon: “…pending approval” + View entries link
+  • adminBrandon may also see expired-password alerts if /admin/users/expired-passwords returns users.
+
+Say: “This section surfaces action items without leaving the home page.”
+
+
+Requirement 4 — Green / yellow / red ratio coding
+-------------------------------------------------
+• Legend on the dashboard explains Good / Borderline / Needs attention / No data.
+• With the demo seed, expect a MIX of colors (e.g. current ratio in yellow range,
+  several green metrics, inventory turnover often borderline or red).
+• Optional narration: “Thresholds follow typical classroom ranges (liquidity,
+  leverage, margins, turnover).”
+
+
+Requirement 5 — Look and feel consistent
+----------------------------------------
+• Same style.css, has-app-shell top bar, add-user-section styling for the ratio block.
+• Logo / typography / buttons match Chart of Accounts and other pages.
+
+Say: “The home dashboard reuses the same shell and section styles as the rest of the app.”
+
+
+Per-user recording checklist (same data, different role + wording)
+--------------------------------------------------------------------
+[ ] regularBrandon  — 3 quick-nav cards; notification “pending approval”
+[ ] managerBrandon  — 3 quick-nav cards; notification “awaiting your approval”
+[ ] adminBrandon    — 5 quick-nav cards; notification + open Users & reports / Add User cards

@@ -72,6 +72,10 @@
         <p>Sign in from the login page. Your role (Administrator, Manager, or Regular User) determines which home page you see. Use <strong>Log out</strong> in the top bar to sign out.</p>
       </section>
       <section>
+        <h4>Users (administrators)</h4>
+        <p>Use <strong>Users &amp; reports</strong> for the full user list, status actions, and expired-password report. Use <strong>Add User</strong> for the create-user form.</p>
+      </section>
+      <section>
         <h4>Chart of accounts</h4>
         <p><strong>Administrators</strong> can add, edit, or deactivate accounts (service menu). <strong>Managers and regular users</strong> can view and search the chart, use filters, and open account ledgers. Account numbers are numeric and must start with 1–5.</p>
       </section>
