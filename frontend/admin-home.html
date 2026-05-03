@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Admin home: Add User form, All Users table (activate/deactivate/suspend/email/edit), Expired Passwords report, Edit User modal. -->
+<!-- Admin home: All Users table, Expired Passwords report, Edit User modal. Add User is on admin-add-user.html. -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -16,39 +16,15 @@
 </div>
 
 <main class="home-main">
-    <h1 class="home-title">Administrator Home</h1>
-    <p class="home-desc">Add users, manage their status, and view password reports. This page is for administrators only.</p>
-    <section class="add-user-section">
-        <h2>Add User</h2>
-        <p class="add-user-hint">Username will be generated automatically (first initial + last name + MMyy).</p>
-        <form id="addUserForm" class="add-user-form">
-            <label for="addFirstName">First name *</label>
-            <input type="text" id="addFirstName" name="firstName" required maxlength="45">
-            <label for="addLastName">Last name *</label>
-            <input type="text" id="addLastName" name="lastName" required maxlength="45">
-            <label for="addEmail">Email *</label>
-            <input type="email" id="addEmail" name="email" required>
-            <label for="addPassword">Password *</label>
-            <input type="password" id="addPassword" name="password" required minlength="8" placeholder="Min 8 chars, start with letter, include letter, number, special char">
-            <p id="addPasswordError" class="error-text hidden"></p>
-            <label for="addRole">Role *</label>
-            <select id="addRole" name="role" required>
-                <option value="">Select role</option>
-                <option value="ADMIN">Administrator</option>
-                <option value="MANAGER">Manager</option>
-                <option value="USER">Regular User (Accountant)</option>
-            </select>
-            <button type="submit" class="btn-submit" title="Create a new user with the information above">Create User</button>
-        </form>
-        <p id="addUserMessage" class="message-text hidden"></p>
-    </section>
-
     <section class="add-user-section" id="userListSection">
-        <h2>All Users</h2>
+        <div class="dash-ratios-header">
+            <h2 class="dash-section-heading">All Users</h2>
+            <a href="admin-add-user.html" class="btn-small dash-panel-back-link" title="Create a new user account">+ Add User</a>
+        </div>
         <p class="add-user-hint">View all users in the system and manage their status.</p>
         <div id="editUserModal" class="modal hidden">
-            <div class="modal-content">
-                <h3>Edit User</h3>
+            <div class="modal-content modal-content--admin">
+                <h3 class="modal-title">Edit User</h3>
                 <form id="editUserForm">
                     <input type="hidden" id="editUserId">
                     <label for="editFirstName">First name</label>
@@ -95,7 +71,7 @@
     </section>
 
     <section class="add-user-section" id="expiredPasswordsSection">
-        <h2>Expired Passwords</h2>
+        <h2 class="dash-section-heading">Expired Passwords</h2>
         <p class="add-user-hint">Users whose passwords are older than 3 months.</p>
         <div class="table-wrapper">
             <table class="admin-table" id="expiredTable">

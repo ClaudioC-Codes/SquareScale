@@ -149,18 +149,26 @@ select:focus{
 }
 .home-main {
     margin-top: 2rem;
-    max-width: 500px;
+    max-width: 1100px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding: 1rem;
+    padding: 1rem 1.25rem 2rem;
+    box-sizing: border-box;
 }
 .home-title {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
 }
 .home-desc {
-    margin-bottom: 1.5rem;
-    color: #333;
+    margin-bottom: 1.25rem;
+    color: #555;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    max-width: 52rem;
 }
 .btn-back {
     padding: 0.5rem 1rem;
@@ -174,23 +182,38 @@ select:focus{
     background: rgb(110, 175, 220);
 }
 
-/* Admin: Add User section */
+/* Panel sections (dashboard, admin, journal — shared “card” look) */
 .add-user-section {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    border: 1px solid rgb(129, 193, 228);
+    margin-top: 1.25rem;
+    padding: 1.25rem 1.35rem;
+    border: 1px solid var(--ss-border);
     border-radius: 12px;
-    background: #fff;
-    max-width: 400px;
+    background: var(--ss-surface);
+    box-shadow: 0 2px 12px rgba(0, 60, 120, 0.07);
+    width: 100%;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
 }
-.add-user-section h2 {
+.add-user-section--narrow {
+    max-width: 560px;
+}
+.add-user-section .dash-section-heading {
+    margin-top: 0;
+}
+.add-user-section h2:not(.dash-section-heading) {
     margin-top: 0;
     margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
 }
 .add-user-hint {
-    font-size: 0.9rem;
-    color: #555;
+    font-size: 0.88rem;
+    color: #666;
     margin-bottom: 1rem;
+    line-height: 1.4;
 }
 .add-user-form {
     display: flex;
@@ -233,8 +256,15 @@ select:focus{
 /* Admin tables */
 .table-wrapper{
     margin-top: 0.75rem;
-    max-height: 260px;
+    max-height: 320px;
     overflow: auto;
+    border: 1px solid var(--ss-border);
+    border-radius: 10px;
+    background: #fafbff;
+}
+#userListSection .table-wrapper,
+#expiredPasswordsSection .table-wrapper {
+    max-height: 420px;
 }
 .admin-table{
     width: 100%;
@@ -243,72 +273,109 @@ select:focus{
 }
 .admin-table th,
 .admin-table td{
-    padding: 0.35rem 0.5rem;
+    padding: 0.45rem 0.65rem;
     border-bottom: 1px solid #e0e6ee;
     text-align: left;
     white-space: nowrap;
 }
 .admin-table thead{
-    background-color: #f3f6fb;
+    background: linear-gradient(180deg, #eef6ff 0%, #e4eef8 100%);
+}
+.admin-table thead th {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: rgb(30, 70, 120);
+    letter-spacing: 0.02em;
 }
 .admin-table tr:nth-child(even){
-    background-color: #fafbff;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+.admin-table tbody tr:hover {
+    background: rgba(129, 193, 228, 0.12);
 }
 .btn-small{
-    padding: 0.25rem 0.5rem;
+    padding: 0.3rem 0.55rem;
     margin-right: 0.15rem;
     font-size: 0.8rem;
-    border-radius: 6px;
-    border: 1px solid rgb(129,193,228);
+    border-radius: 8px;
+    border: 1px solid var(--ss-border);
     background: #fff;
     cursor: pointer;
+    font-family: inherit;
 }
 .btn-small:hover{
     background: rgb(230,242,252);
+    border-color: var(--ss-accent);
 }
 
-/* Edit user modal */
+/* Edit user modal (above app shell z-index: 200) */
 .modal {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.4);
+    background: rgba(15, 40, 70, 0.45);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 600;
+    padding: 1rem;
+    box-sizing: border-box;
 }
 .modal.hidden {
     display: none;
 }
 .modal-content {
-    background: #fff;
-    padding: 1.5rem;
-    border-radius: 16px;
-    border: 1px solid rgb(129,193,228);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-    max-width: 400px;
-    width: 90%;
+    background: var(--ss-surface);
+    padding: 1.35rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid var(--ss-border);
+    box-shadow: 0 12px 40px rgba(0, 40, 100, 0.18);
+    max-width: 440px;
+    width: 100%;
+    box-sizing: border-box;
+}
+.modal-content--admin {
+    max-width: 480px;
+}
+.modal-title {
+    margin: 0 0 1rem 0;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
 }
 .modal-content h3 {
     margin-top: 0;
     margin-bottom: 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
+}
+.modal-content form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
 }
 .modal-content label {
     display: block;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.9rem;
     margin-top: 0.5rem;
+    color: #444;
 }
 .modal-content input,
 .modal-content select {
     width: 100%;
     box-sizing: border-box;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.35rem;
+    padding: 0.45rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid var(--ss-border);
+    font-size: 0.95rem;
 }
 .modal-actions {
-    margin-top: 1rem;
+    margin-top: 1.15rem;
     display: flex;
     gap: 0.75rem;
 }
@@ -470,6 +537,10 @@ body.has-app-shell .user-badge {
     flex-direction: column;
     gap: 0.35rem;
 }
+/* Must beat .app-calendar-popover { display: flex } so .hidden actually hides the popover */
+.app-calendar-popover.hidden {
+    display: none;
+}
 .app-calendar-popover label {
     font-size: 0.85rem;
     font-weight: 600;
@@ -611,8 +682,24 @@ button.app-nav-logout:hover {
    event log before/after, journal hub.
    ================================================================ */
 
-.journal-hub-section { max-width: 680px; }
-.journal-hub-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-top: 0.5rem; }
+.journal-hub-section {
+    max-width: 1100px;
+}
+.journal-hub-section-title {
+    margin-bottom: 0.35rem !important;
+}
+.journal-hub-section-hint {
+    margin-top: 0;
+}
+.journal-hub-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    margin-top: 0.75rem;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+}
 @media (max-width: 560px) { .journal-hub-cards { grid-template-columns: 1fr; } }
 .journal-hub-card { display: flex; flex-direction: column; align-items: flex-start; gap: 0.4rem; padding: 1.25rem 1.1rem; border: 1px solid var(--ss-border); border-radius: 12px; background: #fff; text-decoration: none; color: var(--ss-text); transition: box-shadow 0.15s, border-color 0.15s; }
 .journal-hub-card:hover { border-color: var(--ss-accent-dark); box-shadow: 0 4px 16px rgba(0,80,160,0.10); }
@@ -624,7 +711,16 @@ button.app-nav-logout:hover {
 .je-meta-row { display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; margin-bottom: 1.25rem; align-items: flex-end; }
 .je-meta-row label { display: flex; flex-direction: column; gap: 0.2rem; font-weight: 600; font-size: 0.9rem; }
 .je-meta-row input, .je-meta-row select { font-size: 0.95rem; padding: 0.4rem 0.6rem; }
-.je-lines-heading { margin: 0.25rem 0 0.6rem; font-size: 1.05rem; display: flex; align-items: center; gap: 0.75rem; }
+.je-lines-heading {
+    margin: 1rem 0 0.6rem;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
 .je-balance-indicator { font-size: 0.85rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 8px; }
 .je-balanced { background: rgb(210,240,215); color: rgb(30,110,50); }
 .je-unbalanced { background: rgb(255,225,215); color: rgb(160,50,30); }
@@ -754,15 +850,42 @@ button.app-nav-logout:hover {
     max-width: 1100px;
     margin-top: 0 !important;
 }
+/* Add User page + section headers that mirror the ratio dashboard toolbar */
+.dash-add-user-panel {
+    max-width: 1100px;
+    margin-top: 0;
+}
+.dash-panel-subtitle {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.dash-add-user-form {
+    max-width: 520px;
+}
 .dash-ratios-header {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
     margin-bottom: 0.25rem;
+}
+.dash-panel-back-link {
+    text-decoration: none;
+    color: rgb(40, 90, 140);
+    font-weight: 600;
+    white-space: nowrap;
+}
+.dash-panel-back-link:hover {
+    background: #e8f4fc;
+    border-color: var(--ss-accent-dark);
 }
 .dash-section-heading {
     margin: 0;
     font-size: 1.1rem;
+    font-weight: 700;
+    color: rgb(30, 80, 140);
+    letter-spacing: -0.01em;
 }
 .dash-refresh-btn {
     font-size: 0.88rem;
@@ -869,8 +992,3 @@ button.app-nav-logout:hover {
 .dash-dot-yellow { background: rgb(220,175,30); }
 .dash-dot-red    { background: rgb(210,75,65);  }
 .dash-dot-na     { background: #bbb;            }
-
-/* home-main needs more width to accommodate the dashboard */
-.home-main {
-    max-width: 1100px;
-}

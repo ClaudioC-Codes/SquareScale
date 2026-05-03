@@ -1,7 +1,7 @@
 /**
  * dashboard.js — Sprint 5
  * Injects a financial ratio dashboard + notifications banner into
- * admin-home.html, manager-home.html, and regular-user-home.html.
+ * admin-home.html, admin-add-user.html, manager-home.html, and regular-user-home.html.
  *
  * Add ONE script tag to each home page (after post-login.js):
  *   <script src="src/dashboard.js"></script>
@@ -64,7 +64,8 @@
     { href: "admin-accounts.html",  icon: "📊", label: "Chart of Accounts", desc: "View and manage accounts",          roles: ["ADMIN","MANAGER","USER"] },
     { href: "journal.html",         icon: "📝", label: "Journal",           desc: "Create and review journal entries", roles: ["ADMIN","MANAGER","USER"] },
     { href: "admin-event-log.html", icon: "🔍", label: "Event Log",         desc: "Audit trail of account changes",    roles: ["ADMIN","MANAGER","USER"] },
-    { href: "admin-home.html",      icon: "👥", label: "User Management",   desc: "Add and manage system users",       roles: ["ADMIN"] },
+    { href: "admin-home.html",      icon: "👥", label: "Users & reports",   desc: "All users, status, expired passwords", roles: ["ADMIN"] },
+    { href: "admin-add-user.html",  icon: "➕", label: "Add User",          desc: "Create a new administrator, manager, or accountant", roles: ["ADMIN"] },
   ];
 
   const navEl = document.getElementById("dashQuickNav");

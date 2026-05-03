@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Administrator: create users (POST /admin/users). Styled like the financial ratios dashboard panels. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Add User</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main">
+    <section class="add-user-section dash-add-user-panel">
+        <div class="dash-ratios-header">
+            <h2 class="dash-section-heading">Add User</h2>
+            <a href="admin-home.html" class="btn-small dash-panel-back-link" title="Return to all users and password reports">← Users &amp; reports</a>
+        </div>
+        <p class="add-user-hint dash-panel-subtitle">Username is generated automatically (first initial + last name + MMyy). Password rules apply on create.</p>
+
+        <form id="addUserForm" class="add-user-form dash-add-user-form">
+            <label for="addFirstName">First name *</label>
+            <input type="text" id="addFirstName" name="firstName" required maxlength="45">
+            <label for="addLastName">Last name *</label>
+            <input type="text" id="addLastName" name="lastName" required maxlength="45">
+            <label for="addEmail">Email *</label>
+            <input type="email" id="addEmail" name="email" required>
+            <label for="addPassword">Password *</label>
+            <input type="password" id="addPassword" name="password" required minlength="8" placeholder="Min 8 chars, start with letter, include letter, number, special char">
+            <p id="addPasswordError" class="error-text hidden"></p>
+            <label for="addRole">Role *</label>
+            <select id="addRole" name="role" required>
+                <option value="">Select role</option>
+                <option value="ADMIN">Administrator</option>
+                <option value="MANAGER">Manager</option>
+                <option value="USER">Regular User (Accountant)</option>
+            </select>
+            <button type="submit" class="btn-submit" title="Create a new user with the information above">Create User</button>
+        </form>
+        <p id="addUserMessage" class="message-text hidden"></p>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/admin-add-user.js"></script>
+</body>
+</html>
