@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Journal Entries</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main journal-list-main">
+    <h1 class="home-title">Journal Entries</h1>
+    <p class="home-desc">View, search, and filter journal entries. Managers can approve or reject pending entries.</p>
+
+    <section class="add-user-section jl-section">
+        <div class="jl-filters">
+            <label>Status
+                <select id="jlFilterStatus" title="Filter entries by approval status">
+                    <option value="">All</option>
+                    <option value="PENDING">Pending</option>
+                    <option value="APPROVED">Approved</option>
+                    <option value="REJECTED">Rejected</option>
+                </select>
+            </label>
+            <label>Type
+                <select id="jlFilterType" title="Filter by entry type">
+                    <option value="">All</option>
+                    <option value="REGULAR">Regular</option>
+                    <option value="ADJUSTING">Adjusting</option>
+                </select>
+            </label>
+            <label>Date from
+                <input type="date" id="jlDateFrom" title="Show entries on or after this date">
+            </label>
+            <label>Date to
+                <input type="date" id="jlDateTo" title="Show entries on or before this date">
+            </label>
+            <label>Search (account, amount, date)
+                <input type="text" id="jlSearch" placeholder="Search…" autocomplete="off" title="Search by account name, amount, or date">
+            </label>
+            <div class="filter-actions">
+                <button type="button" class="btn-submit" id="btnJlApply" title="Apply filters and search">Apply filters</button>
+                <button type="button" class="btn-back" id="btnJlClear" title="Clear all filters and reload">Clear filters</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper jl-table-wrap">
+            <table class="admin-table" id="jlTable">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th class="num-cell">Total Debit</th>
+                    <th class="num-cell">Total Credit</th>
+                    <th>Status</th>
+                    <th>Created by</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="jlBody"></tbody>
+            </table>
+        </div>
+        <p id="jlMessage" class="message-text hidden"></p>
+    </section>
+
+    <div id="jlDetailModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="jlDetailTitle">
+        <div class="modal-content jl-detail-modal">
+            <h3 id="jlDetailTitle">Journal Entry #<span id="jlDetailId"></span></h3>
+            <p id="jlDetailMeta" class="add-user-hint"></p>
+
+            <div class="table-wrapper" style="max-height:220px;">
+                <table class="admin-table" id="jlDetailLinesTable">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Account</th>
+                        <th class="num-cell">Amount</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody id="jlDetailLinesBody"></tbody>
+                </table>
+            </div>
+
+            <div id="jlAttachList" class="je-file-list" style="margin-top:0.75rem;"></div>
+
+            
+            <div id="jlManagerControls" class="jl-manager-controls hidden">
+                <label for="jlRejectReason">Rejection reason (required when rejecting)</label>
+                <textarea id="jlRejectReason" rows="3" maxlength="1000" placeholder="Enter reason for rejection…" title="Required if rejecting this journal entry"></textarea>
+                <div class="modal-actions">
+                    <button type="button" class="btn-back" id="btnJlClose" title="Close this detail view">Close</button>
+                    <button type="button" class="btn-back jl-reject-btn" id="btnJlReject" title="Reject this journal entry and record the reason">Reject</button>
+                    <button type="button" class="btn-submit" id="btnJlApprove" title="Approve this journal entry — it will be posted to account ledgers">Approve</button>
+                </div>
+            </div>
+            <div id="jlViewControls" class="hidden">
+                <div class="modal-actions" style="margin-top:1rem;">
+                    <button type="button" class="btn-back" id="btnJlCloseView" title="Close">Close</button>
+                </div>
+            </div>
+
+            <p id="jlDetailMessage" class="message-text hidden"></p>
+        </div>
+    </div>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/journal-list.js"></script>
+</body>
+</html>

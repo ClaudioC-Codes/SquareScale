@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<!-- Administrator chart of accounts: service selector, search/filters, ledger navigation. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Chart of Accounts (Admin)</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main accounts-main">
+    <h1 class="home-title">Chart of Accounts</h1>
+    <p class="home-desc">Choose a service, then complete the form or use search and filters below.</p>
+
+    <section class="add-user-section" id="serviceSection">
+        <label for="serviceSelect"><strong>Select service</strong></label>
+        <select id="serviceSelect" class="service-select" title="Pick Add, View, Edit, or Deactivate before using that part of the page">
+            <option value="">— Choose —</option>
+            <option value="add">Add account</option>
+            <option value="view">View accounts (report / ledger)</option>
+            <option value="edit">Edit account</option>
+            <option value="deactivate">Deactivate account</option>
+        </select>
+    </section>
+
+    <!-- Add -->
+    <section id="panelAdd" class="add-user-section hidden">
+        <h2>Add account</h2>
+        <p class="add-user-hint">Account number: digits only, must start with 1–5 (asset, liability, equity, revenue, expense). Balance = Initial + Debit − Credit unless you enter Balance explicitly.</p>
+        <form id="formAdd" class="add-user-form account-form-grid"></form>
+    </section>
+
+    <!-- View -->
+    <section id="panelView" class="add-user-section hidden">
+        <h2>View accounts</h2>
+        <p class="add-user-hint">Use quick search or filters to narrow the list. <strong>Click a row</strong> to open that account’s ledger.</p>
+
+        <div class="account-filters">
+            <label>Quick search (name or #)
+                <input type="text" id="filterSearch" placeholder="Name or number" autocomplete="off" title="Find accounts whose name or account number contains this text">
+            </label>
+            <label>Name contains
+                <input type="text" id="filterName" placeholder="Filter" title="Account name must contain this text">
+            </label>
+            <label>Number contains
+                <input type="text" id="filterNumber" placeholder="Filter" title="Account number must contain this text">
+            </label>
+            <label>Category contains
+                <input type="text" id="filterCategory" placeholder="Filter" title="Category must contain this text">
+            </label>
+            <label>Min balance
+                <input type="text" id="filterMinBal" placeholder="0.00" title="Minimum balance (inclusive)">
+            </label>
+            <label>Max balance
+                <input type="text" id="filterMaxBal" placeholder="0.00" title="Maximum balance (inclusive)">
+            </label>
+            <label>Active
+                <select id="filterActive" title="Filter by active status">
+                    <option value="">Any</option>
+                    <option value="true">Active only</option>
+                    <option value="false">Inactive only</option>
+                </select>
+            </label>
+            <div class="filter-actions">
+                <button type="button" class="btn-submit" id="btnApplyFilters" title="Apply search and filters to the chart of accounts table">Apply filters</button>
+                <button type="button" class="btn-back" id="btnClearFilters" title="Clear all filter fields and reload the full list">Clear filters</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper accounts-table-wrap">
+            <table class="admin-table" id="accountsTable">
+                <thead>
+                <tr>
+                    <th>#</th><th>Name</th><th>Acct #</th><th>Category</th><th>Balance</th><th>Active</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Edit -->
+    <section id="panelEdit" class="add-user-section hidden">
+        <h2>Edit account</h2>
+        <label for="editPick">Select account</label>
+        <select id="editPick" title="Choose which account to edit"><option value="">— Select —</option></select>
+        <form id="formEdit" class="add-user-form account-form-grid"></form>
+    </section>
+
+    <!-- Deactivate -->
+    <section id="panelDeactivate" class="add-user-section hidden">
+        <h2>Deactivate account</h2>
+        <p class="add-user-hint">Only accounts with balance ≤ 0 can be deactivated.</p>
+        <label for="deactPick">Select account</label>
+        <select id="deactPick" title="Choose which account to deactivate"><option value="">— Select —</option></select>
+        <button type="button" id="btnDeactivate" class="btn-submit" style="margin-top:1rem;" title="Set the selected account to inactive (blocked if balance &gt; 0)">Deactivate selected</button>
+        <p id="deactMessage" class="message-text hidden"></p>
+    </section>
+
+    <p id="accountsGlobalMessage" class="message-text hidden"></p>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/admin-accounts.js"></script>
+</body>
+</html>

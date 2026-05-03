@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Journal entry: create/submit a journal entry with multiple debit/credit lines, file attachments. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Journal Entry</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main journal-entry-main">
+    <h1 class="home-title">New Journal Entry</h1>
+    <p class="home-desc">Debits must equal credits before submitting. All accounts must exist in the chart of accounts.</p>
+
+    <section class="add-user-section je-section">
+        <div class="je-meta-row">
+            <label for="jeDate">Date *
+                <input type="date" id="jeDate" required>
+            </label>
+            <label for="jeDescription">Description
+                <input type="text" id="jeDescription" maxlength="500" placeholder="Optional memo">
+            </label>
+            <label for="jeType">Entry type *
+                <select id="jeType" required>
+                    <option value="REGULAR">Regular</option>
+                    <option value="ADJUSTING">Adjusting</option>
+                </select>
+            </label>
+        </div>
+
+        <h2 class="je-lines-heading">Entry lines <span class="je-balance-indicator" id="jeBalanceIndicator"></span></h2>
+
+        <div class="je-lines-wrap">
+            <table class="admin-table je-lines-table" id="jeLinesTable">
+                <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Account</th>
+                    <th class="num-cell">Amount</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody id="jeLinesBody">
+                <!-- Lines added dynamically -->
+                </tbody>
+                <tfoot>
+                <tr class="je-totals-row">
+                    <td colspan="2" class="je-totals-label">Totals</td>
+                    <td class="num-cell" id="jeTotalDebit">$0.00</td>
+                    <td class="num-cell" id="jeTotalCredit">$0.00</td>
+                    <td></td>
+                </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <div class="je-line-actions">
+            <button type="button" class="btn-back je-add-btn" id="btnAddDebit" title="Add a debit line to this journal entry">+ Add Debit</button>
+            <button type="button" class="btn-back je-add-btn" id="btnAddCredit" title="Add a credit line to this journal entry">+ Add Credit</button>
+        </div>
+
+        <div class="je-error-box hidden" id="jeErrorBox">
+            <ul id="jeErrorList"></ul>
+        </div>
+
+        <div class="je-attach-section">
+            <h3>Attachments</h3>
+            <p class="add-user-hint">Accepted: PDF, Word (.doc/.docx), Excel (.xls/.xlsx), CSV, JPG, PNG.</p>
+            <label class="je-file-label" for="jeFiles" title="Attach source documents to this journal entry">
+                <span>Choose files</span>
+                <input type="file" id="jeFiles" multiple accept=".pdf,.doc,.docx,.xls,.xlsx,.csv,.jpg,.jpeg,.png">
+            </label>
+            <ul id="jeFileList" class="je-file-list"></ul>
+        </div>
+
+        <div class="je-submit-row">
+            <button type="button" class="btn-back" id="btnResetEntry" title="Reset all lines and start over (only available before submitting)">Reset entry</button>
+            <button type="button" class="btn-submit" id="btnSubmitEntry" title="Validate and submit this journal entry for manager approval">Submit for approval</button>
+        </div>
+
+        <p id="jeGlobalMessage" class="message-text hidden"></p>
+    </section>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/journal-entry.js"></script>
+</body>
+</html>

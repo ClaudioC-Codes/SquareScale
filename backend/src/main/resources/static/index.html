@@ -1,41 +1,47 @@
 <!DOCTYPE html>
+<!-- Login page: username/password, Forgot password and New User links. See global.js for submit and role-based redirect. -->
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SquareScale — API running</title>
-  <style>
-    body { font-family: system-ui, sans-serif; max-width: 640px; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; color: #222; }
-    h1 { color: rgb(50, 120, 160); }
-    code { background: #f0f4f8; padding: 0.15rem 0.4rem; border-radius: 4px; }
-    .box { border: 1px solid rgb(129, 193, 228); border-radius: 12px; padding: 1.25rem; background: #fafbff; margin-top: 1rem; }
-    a { color: rgb(40, 100, 160); }
-    ul { margin: 0.5rem 0; padding-left: 1.25rem; }
-    .note { font-size: 0.95rem; color: #444; margin-top: 0.75rem; }
-  </style>
+    <meta charset="UTF-8">
+    <title>SquareScale: Login</title>
+    <link rel="stylesheet" href="src/style.css">
 </head>
-<body>
-  <h1>SquareScale backend is running</h1>
-  <p><code>http://localhost:8080</code> is only the <strong>API</strong> (JSON). The <strong>login screen</strong> is a separate file in your project — you open it like any web page on your PC.</p>
+<body class="has-app-shell">
 
-  <div class="box">
-    <strong>How to get to the login screen (do this after the backend is running)</strong>
-    <ol>
-      <li>In File Explorer, go to your project folder, then open the <code>frontend</code> folder.</li>
-      <li>Double‑click <strong>index.html</strong> (or right‑click → Open with → Chrome / Edge / Firefox).</li>
-      <li>You should see the SquareScale <strong>login</strong> page. Sign in with a user from your database.</li>
-    </ol>
-    <p><strong>Tip (Cursor / VS Code):</strong> Right‑click <code>frontend/index.html</code> in the sidebar → <em>Reveal in File Explorer</em>, then double‑click the file.</p>
-    <p><strong>Alternative:</strong> Install the “Live Server” extension and use “Open with Live Server” on <code>index.html</code> — the app still talks to <code>http://localhost:8080</code>.</p>
-    <p class="note">The JavaScript in <code>frontend/src/global.js</code> calls <code>http://localhost:8080/auth/login</code>, so keep <code>mvnw spring-boot:run</code> running while you test.</p>
-  </div>
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" style="height: 100px; width: 100px">
+</div>
 
-  <div class="box">
-    <strong>Quick API checks</strong> (JSON in the browser or REST client)
-    <ul>
-      <li><a href="/admin/users">GET /admin/users</a></li>
-      <li><a href="/admin/accounts">GET /admin/accounts</a></li>
-    </ul>
-  </div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<form id="loginForm">
+
+
+    <div class="parent-div">
+        <div class="child-div">
+            <label for="userName" id="userNameLabel">Username:</label>
+            <input type="text" id="userName" name="userName" ><br>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+
+            <div id="forgot-create">
+                <a href="forgot-password.html">Forgot password</a>
+                <a href="create-user.html">New User</a>
+            </div><br>
+
+            <input type="submit" value="Login" id="loginButton" title="Sign in with your username and password">
+
+
+        </div>
+    </div>
+
+</form>
+
+<script src="src/app-shell.js"></script>
+<script src="src/global.js"></script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<!-- Manager home after login. Uses post-login.js for badge. -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Manager Home</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+<div id="loggedInBadge" class="user-badge">
+    <img src="src/images/logo.png" alt="Profile" class="badge-img">
+    <span id="loggedInUsername"></span>
+</div>
+
+<main class="home-main">
+    <h1 class="home-title">Manager Home</h1>
+    <p class="home-desc">Managers can view the chart of accounts, event log, and journal. Only administrators can add, edit, or deactivate accounts or use user administration.</p>
+</main>
+
+<script src="src/app-shell.js"></script>
+<script src="src/post-login.js"></script>
+<script src="src/dashboard.js"></script>
+</body>
+</html>

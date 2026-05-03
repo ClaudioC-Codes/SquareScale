@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!-- Request access: first name, last name, address, DOB, email. Submits to /public/register (create-user.js). -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SquareScale: Create Account</title>
+    <link rel="stylesheet" href="src/style.css">
+</head>
+<body class="has-app-shell">
+
+<div class="logoSpace">
+    <img src="src/images/logo.png" alt="SquareScale Logo" id="logo" class="logo-img">
+</div>
+
+<form id="requestAccessForm">
+    <div class="parent-div">
+        <div class="child-div">
+            <h1>Request Access</h1>
+            <p>Please provide your information to request access to SquareScale.</p>
+
+            <label for="firstName">First name *</label>
+            <input type="text" id="firstName" name="firstName" required maxlength="45">
+
+            <label for="lastName">Last name *</label>
+            <input type="text" id="lastName" name="lastName" required maxlength="45">
+
+            <label for="address">Address *</label>
+            <input type="text" id="address" name="address" required>
+
+            <label for="dob">Date of birth *</label>
+            <input type="date" id="dob" name="dob" required>
+
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+
+            <button type="submit" class="btn-submit" style="margin-top: 0.75rem;" title="Submit your access request to the administrator">Submit Request</button>
+            <a href="index.html" class="link-inline" title="Return to the login page">← Return to login</a><br>
+
+            <p id="requestMessage" class="message-text hidden"></p>
+        </div>
+    </div>
+</form>
+
+<script src="src/app-shell.js"></script>
+<script src="src/create-user.js"></script>
+
+</body>
+</html>
