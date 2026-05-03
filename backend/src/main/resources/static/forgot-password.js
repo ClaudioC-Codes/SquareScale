@@ -3,7 +3,7 @@
  * (2) show security questions (static list), (3) on correct answer show new-password form,
  * (4) validate password rules then POST /auth/forgot/reset-password.
  */
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 const passForm = document.getElementById('passForm');
 const errorText = document.getElementById('error-text');

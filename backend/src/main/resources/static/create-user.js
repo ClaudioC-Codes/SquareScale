@@ -2,7 +2,7 @@
  * Create-user (request access) page: submits first name, last name, address, DOB, email
  * to POST /public/register. Admin is notified (simulated); user sees confirmation message.
  */
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 const requestForm = document.getElementById("requestAccessForm");
 const requestMsg = document.getElementById("requestMessage");

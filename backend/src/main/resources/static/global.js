@@ -2,7 +2,7 @@
  * Login page: submits credentials to /auth/login, then redirects by role
  * (ADMIN -> admin-home, MANAGER -> manager-home, USER -> regular-user-home).
  */
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 const loginForm = document.getElementById("loginForm");
 const usernameInput = document.getElementById("userName");

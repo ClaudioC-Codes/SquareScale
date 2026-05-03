@@ -17,7 +17,7 @@
   }
 })();
 
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 /** Password rules: min 8 chars, start with letter, at least one letter/number/special. Returns error string or null. */
 function validatePassword(password) {

@@ -3,7 +3,7 @@
  * Managers can open an entry and approve or reject it (with required reason on rejection).
  * All roles can view entry details.
  */
-const API_BASE_URL = "http://localhost:8080";
+const API_BASE_URL = "";
 
 const moneyFmt = new Intl.NumberFormat("en-US", {
   minimumFractionDigits: 2,
